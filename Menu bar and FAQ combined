@@ -1,0 +1,150 @@
+import tkinter as tk
+from tkinter import *
+import webbrowser
+from tkinter import ttk
+
+class GamePlay(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(StartPage)
+
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
+
+
+class ToggledFrame(tk.Frame):
+
+    def __init__(self, text="", *args, **options):
+        tk.Frame.__init__(self, *args, **options)
+
+        self.show = tk.IntVar()
+        self.show.set(0)
+
+        self.title_frame = ttk.Frame(self, width=300)
+        self.title_frame.pack(fill="x", expand=1)
+
+        ttk.Label(self.title_frame, text=text).pack(side="left", fill="x", expand=1)
+
+        self.toggle_button = ttk.Checkbutton(self.title_frame, width=2, text='♡', command=self.toggle,
+                                             variable=self.show, style='Toolbutton')
+        self.toggle_button.pack(side="left")
+
+        self.sub_frame = tk.Frame(self, relief="sunken", borderwidth=1)
+
+    def toggle(self):
+        if bool(self.show.get()):
+            self.sub_frame.pack(fill="x", expand=1)
+            self.toggle_button.configure(text='♡')
+        else:
+            self.sub_frame.forget()
+            self.toggle_button.configure(text='♡')
+
+
+
+
+
+class StartPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text="Selection Page").pack(side="top", fill="x", pady=10)
+        tk.Button(self, text="Menu", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(MenuPage)).pack()
+
+
+class MenuPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        # Screen Label
+        tk.Label(self, text="Menu Screen").pack(side="top", fill="x", pady=10)
+
+        # Buttons for menu list
+        tk.Button(self, text="Return to start page", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(StartPage)).pack()
+        tk.Button(self, text="My Profile", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Team Group Chat", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Positions", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Music", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(MusicPage)).pack()
+        tk.Button(self, text="Team Members", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Individual Messages", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Help!", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(HelpPage)).pack()
+
+
+class FuturePage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        # Screen Label
+        tk.Label(self, text="This page is under construction").pack(side="top", fill="x", pady=10)
+
+        # Return to menu button so user can go backwards
+        tk.Button(self, text="Return to menu page", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(MenuPage)).pack()
+
+
+class MusicPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+
+        # Takes user to web browser with football spotify playlist up.
+        webbrowser.open_new_tab("https://open.spotify.com/playlist/7gctD17Q9tch3YTlzx71n5")
+
+        # Screen Label
+        tk.Label(self, text="This page is under construction").pack(side="top", fill="x", pady=10)
+
+        # Return to menu button so user can go backwards
+        tk.Button(self, text="Return to menu page", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(MenuPage)).pack()
+
+
+class HelpPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        # Screen Label
+        tk.Label(self, text="Help Screen").pack(side="top", fill="x", pady=10)
+        tk.Label(self, text="Help Screen, here to help").pack(side="top", fill="x", pady=10)
+
+        # Return to menu button so user can go backwards
+        tk.Button(self, text="Return to menu page", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(MenuPage)).pack()
+
+        t = ToggledFrame(text='What can parents view?', relief="raised", borderwidth=1)
+        ttk.Label(t.sub_frame, text='Parents are able to view the group chat'
+                                    ' and player profiles as well as the'
+                                    ' game calendar.').pack(side="left", fill="x", expand=1)
+        t.pack(fill="x", expand=2, pady=2, padx=2, anchor="n")
+
+        t2 = ToggledFrame(text='How do I find my player position?', relief="raised", borderwidth=1)
+        ttk.Label(t2.sub_frame, text='They player position is set by the \n'
+                                     'coach before each game.This will be '
+                                     'sent by the coach asa file to the group \n'
+                                     ' chat to be viewed by players and parents.').pack(side="left", fill="x", expand=1)
+        t2.pack(fill="x", expand=1, pady=2, padx=2, anchor="n")
+
+        t3 = ToggledFrame(text='What does Game Play do?', relief="raised", borderwidth=1)
+        ttk.Label(t3.sub_frame, text='The gameplay app is designed to encourage \n'
+                                     'better communication and team bonding'
+                                     ' within sports teams. We want to encourage\n'
+                                     'easy communication and collaboration for sports teams.').pack(side="left", fill="x", expand=1)
+        t3.pack(fill="x", expand=1, pady=2, padx=2, anchor="n")
+
+
+if __name__ == "__main__":
+    gameplay = GamePlay()
+    gameplay.geometry("414x736")
+    gameplay.title("GamePlay")
+    gameplay.mainloop()
+
