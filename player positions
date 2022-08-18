@@ -1,0 +1,127 @@
+import tkinter as tk
+from tkinter import *
+from functools import partial
+# from tkinter.ttk import *
+# from PIL import Image, ImageTk
+
+
+class CoachPage:
+    def __init__(self):
+
+        # background_color = "#a9ef99"  # pale green
+        background_color = "#00cc00"
+
+        # coach page frame
+        self.coach_page_frame = tk.Frame(background=background_color, pady=10,
+                                         padx=100)
+        self.coach_page_frame.grid()
+
+        # coach page heading (row 0)
+        self.coach_page_label = Label(self.coach_page_frame, text="Coach Page",
+                                      font="Arial 20 bold", padx=10, pady=10, bg=background_color)
+        self.coach_page_label.grid(row=0)
+
+        # self.coach_page_label2 = Label(self.coach_page_frame, text="label", font="Arial 20 bold",
+                                         # padx=10, pady=10, bg=background_color)
+        # self.coach_page_label2.grid(row=5)
+
+        self.field_frame = tk.Frame(self.coach_page_frame, bg=background_color, highlightbackground="white",
+                                    highlightthickness=5, padx=10, pady=10)
+        self.field_frame.grid(row=1)
+
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
+        self.draw_field1.grid(row=2, column=1)
+        self.left_label = Label(self.draw_field1, text="left", padx=15, pady=15, bg=background_color,
+                                highlightbackground="#00cc00", highlightthickness=5)
+        self.left_label.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="black", highlightthickness=5)
+        self.draw_field2.grid(row=2, column=2)
+
+        self.goal_label = Label(self.draw_field2, text="goal", padx=40, pady=10, bg=background_color,
+                                highlightbackground="black", highlightthickness=5)
+        self.goal_label.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
+        self.draw_field3.grid(row=2, column=3)
+
+        self.right_label = Label(self.draw_field3, text="right", padx=15, pady=15, bg=background_color,
+                                 highlightbackground="#00cc00", highlightthickness=5)
+        self.right_label.grid(row=2, column=3)
+
+        # second row
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field1.grid(row=3, column=1)
+        self.left_label = Label(self.draw_field1, text="left", padx=10, pady=10, bg=background_color,
+                                highlightbackground="#00cc00", highlightthickness=5)
+        self.left_label.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field2.grid(row=3, column=2)
+
+        self.goal_label = Label(self.draw_field2, text="goal", padx=40, pady=10, bg=background_color,
+                                highlightbackground="white", highlightthickness=5)
+        self.goal_label.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field3.grid(row=3, column=3)
+
+        self.right_label = Label(self.draw_field3, text="right", padx=10, pady=10, bg=background_color,
+                                 highlightbackground="#00cc00", highlightthickness=5)
+        self.right_label.grid(row=3, column=3)
+
+        # third row
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field1.grid(row=4, column=1)
+        self.left_label = Label(self.draw_field1, text="left 2", padx=10, pady=10, bg=background_color,
+                                highlightbackground="#00cc00", highlightthickness=5)
+        self.left_label.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field2.grid(row=4, column=2)
+
+        self.goal_label = Label(self.draw_field2, text="goal", padx=40, pady=10, bg=background_color,
+                                highlightbackground="black", highlightthickness=5)
+        self.goal_label.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field3.grid(row=4, column=3)
+
+        self.right_label = Label(self.draw_field3, text="right 3", padx=10, pady=10, bg=background_color,
+                                 highlightbackground="#00cc00", highlightthickness=5)
+        self.right_label.grid(row=4, column=3)
+
+        # fourth row
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field1.grid(row=5, column=1)
+        self.left_label4 = Label(self.draw_field1, text="left 4", padx=10, pady=10, bg=background_color,
+                                 highlightbackground="#00cc00", highlightthickness=5)
+        self.left_label4.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field2.grid(row=5, column=2)
+
+        self.goal_label4 = Label(self.draw_field2, text="center", padx=40, pady=10, bg=background_color,
+                                 highlightbackground="black", highlightthickness=5)
+        self.goal_label4.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field3.grid(row=5, column=3)
+
+        self.right4_label = Label(self.draw_field3, text="right 7", padx=10, pady=10, bg=background_color,
+                                  highlightbackground="#00cc00", highlightthickness=5)
+        self.right4_label.grid(row=5, column=3)
+
+
+if __name__ == "__main__":
+    root = Tk()
+    root.title("GamePlay")
+    something = CoachPage()
+    root.mainloop()
