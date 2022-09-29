@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import ttk
 from functools import partial
 # from tkinter.ttk import *
 # from PIL import Image, ImageTk
@@ -7,6 +8,18 @@ from functools import partial
 
 class CoachPage:
     def __init__(self):
+
+        def players():
+            player_names["values"] = ["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"]
+        first = tk.Tk()
+
+        lists = tk.Label(first)
+
+        #lists.grid(column=5, row=5)
+        player_names = ttk.Combobox(first,
+                                    values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                    postcommand=players)
+        player_names.grid(column=5, row=5)
 
         # background_color = "#a9ef99"  # pale green
         background_color = "#00cc00"
@@ -26,98 +39,104 @@ class CoachPage:
         # self.coach_page_label2.grid(row=5)
 
         self.field_frame = tk.Frame(self.coach_page_frame, bg=background_color, highlightbackground="white",
-                                    highlightthickness=5, padx=10, pady=10)
+                                    highlightthickness=5, padx=0, pady=0)
         self.field_frame.grid(row=1)
 
         self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
         self.draw_field1.grid(row=2, column=1)
-        self.left_label = Label(self.draw_field1, text="left", padx=15, pady=15, bg=background_color,
-                                highlightbackground="#00cc00", highlightthickness=5)
-        self.left_label.grid(row=1, column=1)
+        self.left_dropdown = ttk.Combobox(self.draw_field1,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players)
+        self.left_dropdown.grid(row=1, column=1)
 
         self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="black", highlightthickness=5)
         self.draw_field2.grid(row=2, column=2)
 
-        self.goal_label = Label(self.draw_field2, text="goal", padx=40, pady=10, bg=background_color,
-                                highlightbackground="black", highlightthickness=5)
-        self.goal_label.grid(row=1, column=1)
+        self.goal_dropdown = ttk.Combobox(self.draw_field2,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players)
+        self.goal_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
         self.draw_field3.grid(row=2, column=3)
 
-        self.right_label = Label(self.draw_field3, text="right", padx=15, pady=15, bg=background_color,
-                                 highlightbackground="#00cc00", highlightthickness=5)
-        self.right_label.grid(row=2, column=3)
+        self.right_dropdown = ttk.Combobox(self.draw_field3,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players)
+        self.right_dropdown.grid(row=1, column=1)
 
         # second row
         self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field1.grid(row=3, column=1)
-        self.left_label = Label(self.draw_field1, text="left", padx=10, pady=10, bg=background_color,
-                                highlightbackground="#00cc00", highlightthickness=5)
-        self.left_label.grid(row=1, column=1)
+        self.left_dropdown = ttk.Combobox(self.draw_field1,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players)
+        self.left_dropdown.grid(row=1, column=1)
 
         self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field2.grid(row=3, column=2)
-
-        self.goal_label = Label(self.draw_field2, text="goal", padx=40, pady=10, bg=background_color,
-                                highlightbackground="white", highlightthickness=5)
-        self.goal_label.grid(row=1, column=1)
+        self.middle_dropdown = ttk.Combobox(self.draw_field2,
+                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            postcommand=players)
+        self.middle_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field3.grid(row=3, column=3)
-
-        self.right_label = Label(self.draw_field3, text="right", padx=10, pady=10, bg=background_color,
-                                 highlightbackground="#00cc00", highlightthickness=5)
-        self.right_label.grid(row=3, column=3)
+        self.right_dropdown = ttk.Combobox(self.draw_field3,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players)
+        self.right_dropdown.grid(row=1, column=1)
 
         # third row
         self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field1.grid(row=4, column=1)
-        self.left_label = Label(self.draw_field1, text="left 2", padx=10, pady=10, bg=background_color,
-                                highlightbackground="#00cc00", highlightthickness=5)
-        self.left_label.grid(row=1, column=1)
+        self.left_dropdown = ttk.Combobox(self.draw_field1,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players)
+        self.left_dropdown.grid(row=1, column=1)
 
         self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field2.grid(row=4, column=2)
-
-        self.goal_label = Label(self.draw_field2, text="goal", padx=40, pady=10, bg=background_color,
-                                highlightbackground="black", highlightthickness=5)
-        self.goal_label.grid(row=1, column=1)
+        self.middle_dropdown = ttk.Combobox(self.draw_field2,
+                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            postcommand=players)
+        self.middle_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field3.grid(row=4, column=3)
-
-        self.right_label = Label(self.draw_field3, text="right 3", padx=10, pady=10, bg=background_color,
-                                 highlightbackground="#00cc00", highlightthickness=5)
-        self.right_label.grid(row=4, column=3)
+        self.right_dropdown = ttk.Combobox(self.draw_field3,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players)
+        self.right_dropdown.grid(row=1, column=1)
 
         # fourth row
         self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field1.grid(row=5, column=1)
-        self.left_label4 = Label(self.draw_field1, text="left 4", padx=10, pady=10, bg=background_color,
-                                 highlightbackground="#00cc00", highlightthickness=5)
-        self.left_label4.grid(row=1, column=1)
+        self.left_dropdown = ttk.Combobox(self.draw_field1,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players)
+        self.left_dropdown.grid(row=1, column=1)
 
         self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field2.grid(row=5, column=2)
-
-        self.goal_label4 = Label(self.draw_field2, text="center", padx=40, pady=10, bg=background_color,
-                                 highlightbackground="black", highlightthickness=5)
-        self.goal_label4.grid(row=1, column=1)
+        self.middle_dropdown = ttk.Combobox(self.draw_field2,
+                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            postcommand=players)
+        self.middle_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field3.grid(row=5, column=3)
-
-        self.right4_label = Label(self.draw_field3, text="right 7", padx=10, pady=10, bg=background_color,
-                                  highlightbackground="#00cc00", highlightthickness=5)
-        self.right4_label.grid(row=5, column=3)
+        self.right_dropdown = ttk.Combobox(self.draw_field3,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players)
+        self.right_dropdown.grid(row=1, column=1)
 
 
 if __name__ == "__main__":
