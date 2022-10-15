@@ -1,0 +1,295 @@
+# Sarah Wade, 13th October - combining the first two components
+# https://stackoverflow.com/questions/7546050/switch-between-two-frames-in-tkinter
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+
+
+class GamePlay(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(StartPage)
+
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
+
+
+class StartPage(tk.Frame):
+    def __init__(self, partner):
+        tk.Frame.__init__(self, partner)
+        tk.Label(self, text="Selection Page", font="arial 20 bold").pack(side="top", fill="x", pady=10)
+        tk.Button(self, text="Coach", padx=10, pady=10,
+                  command=lambda: partner.switch_frame(CoachPage)).pack()
+        tk.Button(self, text="Player", padx=10, pady=10,
+                  command=lambda: partner.switch_frame(PlayerPage)).pack()
+
+
+class CoachPage(tk.Frame):
+    def __init__(self, partner):
+        tk.Frame.__init__(self, partner)
+        tk.Label(self, text="Coach Screen", font="arial 20 bold").pack(side="top", fill="x", pady=10)
+        tk.Button(self, text="Return to start page", padx=10, pady=10,
+                  command=lambda: partner.switch_frame(StartPage)).pack()
+
+        tk.Button(self, text="Pre-Set Players", padx=10, pady=10,
+                  command=lambda: partner.switch_frame(PreSetNames)).pack()
+
+
+class PlayerPage(tk.Frame):
+    def __init__(self, partner):
+        tk.Frame.__init__(self, partner)
+        tk.Label(self, text="Player Screen", font="arial 20 bold").pack(side="top", fill="x", pady=10)
+        tk.Button(self, text="Return to start page", pady=10, padx=10,
+                  command=lambda: partner.switch_frame(StartPage)).pack()
+
+
+class PreSetNames(tk.Frame):
+    def __init__(self, partner):
+        tk.Frame.__init__(self, partner)
+
+        def players():
+            player_names["values"] = ["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"]
+
+        player_names = ttk.Combobox(values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                    postcommand=players)
+
+        # background_color = "#a9ef99"  # pale green
+        background_color = "#00cc00"
+
+        # coach page frame
+        self.coach_page_frame = tk.Frame(background=background_color, pady=10,
+                                         padx=10)
+        self.coach_page_frame.pack()
+
+        # coach page heading (row 0)
+        self.coach_page_label = Label(self.coach_page_frame, text="Coach Page",
+                                      font="Arial 20 bold", padx=5, pady=5, bg=background_color)
+        self.coach_page_label.grid(row=0)
+
+
+        self.field_frame = tk.Frame(self.coach_page_frame, bg=background_color, highlightbackground="white",
+                                    highlightthickness=5, padx=0, pady=0)
+        self.field_frame.grid(row=1)
+
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
+        self.draw_field1.grid(row=2, column=1)
+
+        self.select_pos2 = tk.StringVar()
+        self.left1_dropdown = ttk.Combobox(self.draw_field1,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players, state="readonly", width=10, textvariable=self.select_pos2)
+        self.left1_dropdown.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="black", highlightthickness=5)
+        self.draw_field2.grid(row=2, column=2)
+
+        self.select_pos1 = tk.StringVar()
+        self.goal_dropdown = ttk.Combobox(self.draw_field2,
+                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          postcommand=players, state="readonly", width=10, textvariable=self.select_pos1)
+        self.goal_dropdown.grid(row=1, column=1)
+
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
+        self.draw_field3.grid(row=2, column=3)
+
+        self.select_pos3 = tk.StringVar()
+        self.right1_dropdown = ttk.Combobox(self.draw_field3,
+                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos3)
+        self.right1_dropdown.grid(row=1, column=1)
+
+        # second row
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field1.grid(row=3, column=1)
+
+        self.select_pos4 = tk.StringVar()
+        self.left2_dropdown = ttk.Combobox(self.draw_field1,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players, state="readonly", width=10, textvariable=self.select_pos4)
+        self.left2_dropdown.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field2.grid(row=3, column=2)
+
+        self.select_pos5 = tk.StringVar()
+        self.middle2_dropdown = ttk.Combobox(self.draw_field2,
+                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             postcommand=players, state="readonly", width=10, textvariable=self.select_pos5)
+        self.middle2_dropdown.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field3.grid(row=3, column=3)
+
+        self.select_pos6 = tk.StringVar()
+        self.right2_dropdown = ttk.Combobox(self.draw_field3,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players, state="readonly", width=10, textvariable=self.select_pos6)
+        self.right2_dropdown.grid(row=1, column=1)
+
+        # third row
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field1.grid(row=4, column=1)
+
+        self.select_pos7 = tk.StringVar()
+        self.left3_dropdown = ttk.Combobox(self.draw_field1,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players, state="readonly", width=10, textvariable=self.select_pos7)
+        self.left3_dropdown.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field2.grid(row=4, column=2)
+
+        self.select_pos8 = tk.StringVar()
+        self.middle3_dropdown = ttk.Combobox(self.draw_field2,
+                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             postcommand=players, state="readonly", width=10, textvariable=self.select_pos8)
+        self.middle3_dropdown.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field3.grid(row=4, column=3)
+
+        self.select_pos9 = tk.StringVar()
+        self.right3_dropdown = ttk.Combobox(self.draw_field3,
+                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos9)
+        self.right3_dropdown.grid(row=1, column=1)
+
+        # fourth row
+        self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field1.grid(row=5, column=1)
+
+        self.select_pos10 = tk.StringVar()
+        self.left4_dropdown = ttk.Combobox(self.draw_field1,
+                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           postcommand=players, state="readonly", width=10, textvariable=self.select_pos10)
+        self.left4_dropdown.grid(row=1, column=1)
+
+        self.draw_field2 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color,
+                                    highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field2.grid(row=5, column=2)
+
+        self.select_pos11 = tk.StringVar()
+        self.middle4_dropdown = ttk.Combobox(self.draw_field2,
+                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             postcommand=players, state="readonly", width=10, textvariable=self.select_pos11)
+        self.middle4_dropdown.grid(row=1, column=1)
+
+        self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
+        self.draw_field3.grid(row=5, column=3)
+
+        self.select_pos12 = tk.StringVar()
+        self.right4_dropdown = ttk.Combobox(self.draw_field3,
+                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos12)
+        self.right4_dropdown.grid(row=1, column=1)
+
+        self.select_team_button = Button(self.coach_page_frame, text="Select", command=lambda: self.export())
+        self.select_team_button.grid(row=3)
+
+        def update_positions(event):
+            print('Updated')
+            pos1mess = f'Position 1: {self.select_pos1.get()}'
+            pos2mess = f'Position 2: {self.select_pos2.get()}'
+            pos3mess = f'Position 3: {self.select_pos3.get()}'
+            pos4mess = f'Position 4: {self.select_pos4.get()}'
+            pos5mess = f'Position 5: {self.select_pos5.get()}'
+            pos6mess = f'Position 6: {self.select_pos6.get()}'
+            pos7mess = f'Position 7: {self.select_pos7.get()}'
+            pos8mess = f'Position 8: {self.select_pos8.get()}'
+            pos9mess = f'Position 9: {self.select_pos9.get()}'
+            pos10mess = f'Position 10: {self.select_pos10.get()}'
+            pos11mess = f'Position 11: {self.select_pos11.get()}'
+            pos12mess = f'Position 12: {self.select_pos12.get()}'
+            print(pos1mess, pos2mess, pos3mess, pos4mess, pos5mess, pos6mess, pos7mess, pos8mess, pos9mess, pos10mess, pos11mess, pos12mess)
+
+        self.goal_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.left1_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.right1_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.left2_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.middle2_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.right2_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.left3_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.middle3_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.right3_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.left4_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.middle4_dropdown.bind('<<ComboboxSelected>>', update_positions)
+        self.right4_dropdown.bind('<<ComboboxSelected>>', update_positions)
+
+# if any = " " then error = team is not completed
+    """def export(self, pos1):
+        Export(self, pos1)"""
+
+    """ def getting_select(self.draw_field1):
+            left_val = self.left_dropdown.get()"""
+
+
+"""class Export:
+    def __init__(self, partner, pos1):
+        background = "orange"
+        print("Hello")
+        print(pos1)
+        # disable export button
+        #partner.select_team_button.config(state=DISABLED)
+
+        # set up child window (i.e. export box)
+        self.export_box = Toplevel()
+
+        # set up GUI frame
+        self.export_frame = Frame(self.export_box, width=300, bg=background)
+        self.export_frame.grid()
+
+        # set up export heading (row 0)
+        self.how_heading = Label(self.export_frame, text="Team Selected",
+                                 font="Garamond 14 bold", bg=background)
+        self.how_heading.grid(row=0)
+
+ # export text (label, row 1)
+        self.export_text = Label(self.export_frame, text="Enter a filename "
+                                                         "in the box below "
+                                                         "and press the Save "
+                                                         "button to save your "
+                                                         "calculation history "
+                                                         "to a text file",
+                                 justify=LEFT, width=40,
+                                 bg=background, wrap=250)
+        self.export_text.grid(row=1)
+
+        # export text (label, row 1)
+        self.export_text = Label(self.export_frame, text=f"1 {pos1} "
+                                                    "you enter below "
+                                                    "already exists, "
+                                                    "its contents will "
+                                                    "be replaced with "
+                                                    "your calculation"
+                                                    "history",
+                            justify=LEFT, bg="#FFAFAF",
+                            fg="maroon", wrap=225, padx=10, pady=10,
+                            font="arial 10 italic")
+        self.export_text.grid(row=2)
+
+
+"""
+
+if __name__ == "__main__":
+    gameplay = GamePlay()
+    gameplay.geometry("500x900")
+    gameplay.title("GamePlay")
+    gameplay.mainloop()
+
+
+
+
