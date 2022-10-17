@@ -1,0 +1,240 @@
+from tkinter import *
+from functools import partial  # to prevent unwanted windows
+import random
+import re
+
+"""Opens up a screen with entry box to allow for user input.
+   Help function links to Help class, team function links to team class. Save_names function appends information to list"""
+
+class Start_Screen:
+    def __init__(self, parent):
+        # set background colour format for GUI
+        background_color = "#90EE90"
+
+        # Initialiseing list to hold player information
+        self.player_info_list = []
+        # list to store all the player numbers into
+        self.player_number_list = []
+
+        # Main frame for player information (name)
+        self.player_frame = Frame(width=600, height=600, bg=background_color,
+                                  pady=200, padx=200)
+        self.player_frame.grid(row=0)
+
+        # Game Play Heading (Row 0)
+        self.main_heading_label = Label(self.player_frame,
+                                        text="Game Play",
+                                        font=("Arial", "16", "bold"),
+                                        bg=background_color,
+                                        padx=10, pady=10)
+        self.main_heading_label.grid(row=0)
+
+        # User instructions(row 1)
+        self.player_information = Label(self.player_frame,
+                                        text="Enter your name:",
+                                        font=("Arial", "14"), wrap=250,
+                                        justify=LEFT,
+                                        padx=10, pady=10, bg=background_color)
+        self.player_information.grid(row=1)
+
+        # Player name entry box
+        self.entry = Entry(self.player_frame, width=20,
+                           font="Arial 14 bold")
+        self.entry.grid(row=2)
+        self.entry.focus()
+
+        # Label for user to see when they have sucessfully submitted information (row 4)
+        self.submitted_label = Label(self.player_frame,
+                                     font="Arial 14 bold",
+                                     fg="purple", bg=background_color,
+                                     pady=10, text="--")
+        self.submitted_label.grid(row=4)
+
+        # Set up number entry box Frame
+        self.number_frame = Frame(self.player_frame, bg=background_color)
+        self.number_frame.grid(row=6)
+
+        # Set up number name heading
+        self.player_number_heading = Label(self.number_frame, text="Enter your Player Number:",
+                                           font="Arial 14", bg=background_color)
+        self.player_number_heading.grid(row=0)
+
+        self.number_text = Label(self.number_frame,
+                                 text="Please enter your number",
+                                 wrap=250, font="arial 10 italic", justify=LEFT, bg=background_color,
+                                 fg="maroon", padx=10, pady=10)
+        self.number_text.grid(row=1)
+
+        self.entry2 = Entry(self.number_frame, width=20,
+                            font="Arial 14 bold")
+        self.entry2.grid(row=2)
+
+        # Buttons frame for buttons that allow the user to continue by clearing or submitting
+        self.continue_button_frame = Frame(self.player_frame)
+        self.continue_button_frame.grid(row=10, pady=10)
+
+        self.submit_button = Button(self.continue_button_frame,
+                                    highlightbackground='light blue',
+                                    text="Submit", font="Arial 10 bold",
+                                    padx=10, pady=10,
+                                    command=lambda: self.save_names(self.player_info_list, self.player_number_list))
+        self.submit_button.grid(row=0, column=0)
+
+        # numbers text (label, row 1)
+        self.submitted_number_text = Label(self.number_frame, text="--",
+                                           justify=LEFT, font="Arial 14 bold", width=40, bg=background_color,
+                                           wrap=250)
+        self.submitted_number_text.grid(row=1)
+
+        self.team_frame = Frame(self.number_frame)
+        self.team_frame.grid(row=12, pady=10)
+
+        self.team_button = Button(self.team_frame, font="Arial 12 bold",
+                                  text="Team List", width=15,
+                                  padx=5, pady=5, command=lambda: self.team(self.player_number_list, self.player_info_list))
+        self.team_button.grid(row=10, column=0)
+
+        # Help button frame (row 5)
+        self.help_frame = Frame(self.player_frame)
+        self.help_frame.grid(row=15, pady=10)
+        self.help_button = Button(self.help_frame, font="Arial 12 bold",
+                                  text="Help", width=5,
+                                  padx=5, pady=5, command=self.help)
+        self.help_button.grid(row=1, column=1)
+
+    # defines the module that opens the Help Class
+    def help(self):
+        print("You asked for help")
+        get_help = Help(self)
+        get_help.help_text.configure(text="Enter your player name and number to log in :)")
+
+    # appends players names to list and changed the submitted label to reflect the users entered name, opens Numbers class
+    def save_names(self, player_number_list, player_info_list):
+        name = self.entry.get()
+        self.player_info_list.append(name)
+        print(self.player_info_list)
+        self.submitted_label.configure(text=name, fg="blue")
+        number = self.entry2.get()
+        self.player_number_list.append(number)
+        print(self.player_number_list)
+        self.submitted_number_text.configure(text=number, fg="blue")
+        self.entry.delete(0, 'end')
+        self.entry2.delete(0, 'end')
+
+    def team(self, player_number_list, player_info_list):
+        Team(self, player_number_list, player_info_list)
+
+
+# Team class prints the list of team members entered and their numbers
+class Team:
+    def __init__(self, partner, player_number_list, player_info_list):
+        background = "#a9ef99"
+        print(player_info_list)
+        print(player_number_list)
+
+        # disable team and submit button
+        partner.team_button.config(state=DISABLED)
+
+        # sets up child window
+        self.team_box = Toplevel()
+
+        # If users press cross at to it closes history and 'realeses' team window
+        self.team_box.protocol('WM_DELETE_WINDOW', partial(self.close_team, partner))
+
+        # Set up GUI Frame
+        self.team_frame = Frame(self.team_box, bg=background)
+        self.team_frame.grid()
+
+        # Set up team name heading
+        self.main_heading = Label(self.team_frame, text="PNGHS 2022 Football Team",
+                                 font="Arial 19 bold", bg=background)
+        self.main_heading.grid(row=0)
+
+        # team text (label, row 1)
+        self.team_text = Label(self.team_frame, text="",
+                               justify=LEFT, width=40, bg=background,
+                               wrap=250)
+        self.team_text.grid(row=1)
+
+        # team text
+        self.team_text = Label(self.team_frame,
+                               text="Here are your "
+                                    " player names.",
+                               wrap=250, font="arial 10 italic", justify=LEFT, bg=background,
+                               fg="maroon", padx=10, pady=10)
+        self.team_text.grid(row=1)
+
+        if len(player_info_list) == 0:
+            self.team_button.config(state=DISABLED)
+
+        rez = "\n".join("{} {}".format(x, y) for x, y in zip(player_info_list, player_number_list))
+        print(rez)
+
+        # prints names and numbers in side by side lists
+        self.team_names_label = Label(self.team_frame, text=rez,
+                                      bg=background, font="Arial 12", justify=LEFT)
+        self.team_names_label.grid(row=2, column=0)
+
+        # Export /dismiss button
+        self.dismiss_frame = Frame(self.team_frame)
+        self.dismiss_frame.grid(row=3, pady=10)
+
+        # Dismiss button
+        self.dismiss_button = Button(self.dismiss_frame, text="Dismiss",
+                                     font="Arial 12 bold",
+                                     command=partial(self.close_team, partner))
+        self.dismiss_button.grid(row=0, column=1)
+
+    def close_team(self, partner):
+        # put history button back to normal
+        partner.team_button.config(state=NORMAL)
+        partner.submit_button.config(state=NORMAL)
+        self.team_box.destroy()
+
+
+class Help:
+    def __init__(self, partner):
+
+        background = "orange"
+
+        # disbable help button
+        partner.help_button.config(state=DISABLED)
+
+        # sets up child window help box
+        self.help_box = Toplevel()
+        # If users press cross at to, closes help and 'releases' help button
+        self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, partner))
+
+        # set up GUI Frame
+        self.help_frame = Frame(self.help_box, bg=background)
+        self.help_frame.grid()
+
+        # set up Help heading (row 0)
+        self.how_heading = Label(self.help_frame, text="Help / Instructions",
+                                 font="arial 14 bold", bg=background)
+        self.how_heading.grid(row=0)
+
+        # Help Text (label, row 1)
+        self.help_text = Label(self.help_frame, text="",
+                               justify=LEFT, width=40, bg=background, wrap=250)
+        self.help_text.grid(column=0, row=1)
+
+        # Dismiss button (row 2)
+        self.dismiss_btn = Button(self.help_frame, text="Dismiss", width=10, bg="orange",
+                                  font="arial 10 bold",
+                                  command=partial(self.close_help, partner))
+        self.dismiss_btn.grid(row=2, pady=10)
+
+    def close_help(self, partner):
+        # put help button back to normal...
+        partner.help_button.config(state=NORMAL)
+        self.help_box.destroy()
+
+
+
+# main routine
+if __name__ == "__main__":
+    root = Tk()
+    root.title("Game Play")
+    something = Start_Screen(root)
+    root.mainloop()
