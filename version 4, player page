@@ -1,0 +1,179 @@
+import tkinter as tk
+from tkinter import *
+from functools import partial  # to prevent unwanted windows
+# from tkinter import tkk
+import random
+import re
+# Bella Ives
+
+"""Opens up a screen with entry box to allow for user input.
+   Help function links to Help class, team function links to team class. Save_names function appends information to list"""
+
+
+class GamePlay(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(EnterList)
+
+        # Formatting variables
+    def switch_frame(self, frame_class):
+        """Destroys current frame and replaces it with a new one."""
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
+
+
+class EnterList(tk.Frame):
+    def __init__(self, partner):
+        tk.Frame.__init__(self, bg="#90EE90")
+        # set background colour format for GUI
+        background_color = "#90EE90"
+
+        # Game Play Heading (Row 0)
+        tk.Label(self,
+                 text="Game Play",
+                 font=("Arial", "16", "bold"),
+                 bg=background_color,
+                 padx=10, pady=10).pack()
+
+        # User instructions(row 1)
+        tk.Label(self,
+                 text="Enter your name:",
+                 font=("Arial", "14"), wrap=250,
+                 justify=LEFT,
+                 padx=10, pady=10, bg=background_color).pack()
+        # Player name entry box
+        self.entry = Entry(self, width=20,
+                           font="Arial 14 bold")
+        self.entry.pack()
+
+        # Label for user to see when they have sucessfully submitted information (row 4)
+        self.submitted_label = tk.Label(self,
+                                        font="Arial 14 bold",
+                                        fg="purple", bg=background_color,
+                                        pady=10, text="--")
+        self.submitted_label.pack()
+
+        # Set up number name heading
+        tk.Label(self, text="Enter your Player Number:",
+                 font="Arial 14", bg=background_color).pack()
+
+        tk.Label(self, text="Please enter your number",
+                 wrap=250, font="arial 10 italic", justify=LEFT, bg=background_color,
+                 fg="maroon", padx=10, pady=10).pack()
+
+        self.entry2 = tk.Entry(self, width=20,
+                               font="Arial 14 bold")
+        self.entry2.pack()
+
+        self.submit_button = tk.Button(self,
+                                       highlightbackground='light blue',
+                                       text="Submit", font="Arial 10 bold",
+                                       padx=10, pady=10,
+                                       command=lambda: self.save_names())
+        self.submit_button.pack()
+
+        # numbers text (label, row 1)
+        self.submitted_number_text = tk.Label(self, text="--",
+                                              justify=LEFT, font="Arial 14 bold", width=40, bg=background_color)
+        self.submitted_number_text.pack()
+
+        self.team_frame = tk.Frame(self)
+        self.team_frame.pack()
+
+        tk.Button(self, font="Arial 12 bold",
+                  text="Team List", width=15,
+                  padx=5, pady=5, command= lambda: partner.switch_frame(Team)).pack()
+
+        # Help button frame (row 5)
+        self.help_frame = tk.Frame(self)
+        self.help_frame.pack()
+        tk.Button(self, font="Arial 12 bold",
+                  text="Help", width=5,
+                  padx=5, pady=5, command= lambda: partner.switch_frame(Help)).pack()
+
+    # appends players names to list and changed the submitted label to reflect the users entered name, opens Numbers class
+    def save_names(self):
+        name = self.entry.get()
+        player_info_list.append(name)
+        print(player_info_list)
+        self.submitted_label.configure(text=name, fg="blue")
+        number = self.entry2.get()
+        player_number_list.append(number)
+        print(player_number_list)
+        self.submitted_number_text.configure(text=number, fg="blue")
+        self.entry.delete(0, 'end')
+        self.entry2.delete(0, 'end')
+        return player_number_list
+        return player_info_list
+
+
+# Team class prints the list of team members entered and their numbers
+class Team(tk.Frame):
+    def __init__(self, partner):
+        tk.Frame.__init__(self, partner, bg="#90EE90")
+        background_color = "#90EE90"
+        print(player_info_list)
+        print(player_number_list)
+
+        # Set up team name heading
+        self.main_heading = tk.Label(self, text="PNGHS 2022 Football Team",
+                                     font="Arial 19 bold", bg=background_color)
+        self.main_heading.pack()
+
+        # team text (label, row 1)
+        self.team_text = tk.Label(self, text="",
+                                  justify=LEFT, width=40, bg=background_color,
+                                  wrap=250)
+        self.team_text.pack()
+
+        # team text
+        self.team_text = tk.Label(self,
+                                  text="Here are your "
+                                    " player names.",
+                                  wrap=250, font="arial 10 italic", justify=LEFT, bg=background_color,
+                                  fg="maroon", padx=10, pady=10)
+        self.team_text.pack()
+
+        """if len(player_info_list) == 0:
+            self.submit_button.config(state=DISABLED)
+        if len(player_number_list) == 0:
+            self.submit_button.config(state=DISABLED)"""
+
+        print_lists = "\n".join("{} {}".format(x, y) for x, y in zip(player_info_list, player_number_list))
+        print(print_lists)
+
+        # prints names and numbers in side by side lists
+        tk.Label(self, text=print_lists,
+                 bg=background_color, font="Arial 12", justify=LEFT).pack()
+
+
+class Help(tk.Frame):
+    def __init__(self, partner):
+        background = "orange"
+        tk.Frame.__init__(self, partner, bg=background)
+
+        # set up Help heading (row 0)
+        tk.Label(self, text="Help / Instructions",
+                                 font="arial 14 bold", bg=background).pack()
+
+        # Help Text (label, row 1)
+        tk.Label(self, text="Enter your player name and number to log in :)",
+                               justify=LEFT, width=40, bg=background).pack()
+
+        tk.Button(self, text="Back", padx=10, pady=10,
+                  command=lambda: partner.switch_frame(EnterList)).pack()
+
+
+if __name__ == "__main__":
+    gameplay = GamePlay()
+    player_info_list = []
+    player_number_list = []
+    gameplay.geometry("500x900")
+    gameplay.config(background="#90EE90")
+    gameplay.title("GamePlay")
+    gameplay.mainloop()
+
