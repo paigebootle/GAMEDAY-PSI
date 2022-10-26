@@ -1,51 +1,96 @@
-# Sarah Wade, 16th October - finished the list on export page
+# Sarah Wade, 22nd October - combining the first two components
 
-# https://stackoverflow.com/questions/7546050/switch-between-two-frames-in-tkinter
 import tkinter as tk
 from tkinter import *
-from tkinter import messagebox
 from tkinter import ttk
 
-
+# the first class that is called from the main
 class GamePlay(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self._frame = None
+        # calls the method and switches the frame to the start page
         self.switch_frame(StartPage)
 
     def switch_frame(self, frame_class):
-        """Destroys current frame and replaces it with a new one."""
+        # Destroys current frame and replaces it with a new one
         new_frame = frame_class(self)
         if self._frame is not None:
             self._frame.destroy()
         self._frame = new_frame
         self._frame.pack()
 
-
 class StartPage(tk.Frame):
     def __init__(self, partner):
-        tk.Frame.__init__(self, partner)
-        tk.Label(self, text="Selection Page", font="arial 20 bold").pack(side="top", fill="x", pady=10)
-        tk.Button(self, text="Coach", padx=10, pady=10,
+        background_color = "#00cc00"
+        # creates new frame that replaces the previous one to switch frames rather than opening new GUIs
+        tk.Frame.__init__(self, partner, bg=background_color)
+
+        tk.Label(self, text="Selection Page", font="Garamond 34 bold", bg=background_color, height=10, pady=15, padx=15).pack(side="top", fill="x", pady=10)
+        tk.Button(self, text="Menu", pady=10, padx=10, width=20,
+                  command=lambda: partner.switch_frame(MenuPage)).pack()
+        tk.Button(self, text="Coach", padx=10, pady=10, width=20,
                   command=lambda: partner.switch_frame(CoachPage)).pack()
-        tk.Button(self, text="Player", padx=10, pady=10,
+        tk.Button(self, text="Player", padx=10, pady=10, width=20,
                   command=lambda: partner.switch_frame(PlayerPage)).pack()
+
+
+class MenuPage(tk.Frame):
+    def __init__(self, master):
+        background_color = "#00cc00"
+        # creates new frame that replaces the previous one to switch frames rather than opening new GUIs
+        tk.Frame.__init__(self, master, bg=background_color)
+
+        # Screen Label
+        tk.Label(self, text="Menu Screen", bg=background_color, font="Garamond 20 bold").pack(side="top", fill="x", pady=10)
+
+        # Buttons for menu list
+        tk.Button(self, text="Return to start page", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(StartPage)).pack()
+        tk.Button(self, text="My Profile", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Team Group Chat", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Positions", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Music", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Team Members", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Individual Messages", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+        tk.Button(self, text="Help!", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(FuturePage)).pack()
+
+
+class FuturePage(tk.Frame):
+    def __init__(self, master):
+        background_color = "#00cc00"
+        tk.Frame.__init__(self, master, bg=background_color)
+
+        # Screen Label
+        tk.Label(self, text="This page is under construction", bg=background_color).pack(side="top", fill="x", pady=10)
+
+        # Return to menu button so user can go backwards
+        tk.Button(self, text="Return to menu page", pady=10, padx=10, width=20,
+                  command=lambda: master.switch_frame(MenuPage)).pack()
 
 
 class CoachPage(tk.Frame):
     def __init__(self, partner):
-        tk.Frame.__init__(self, partner)
-        tk.Label(self, text="Coach Screen", font="arial 20 bold").pack(side="top", fill="x", pady=10)
-        tk.Button(self, text="Return to start page", padx=10, pady=10,
+        background_color = "#00cc00"
+        tk.Frame.__init__(self, partner, bg=background_color)
+        tk.Label(self, text="Coach Screen", font="arial 20 bold", bg=background_color).pack(side="top", fill="x", pady=10)
+        tk.Button(self, text="Return to start page", padx=10, pady=10, width=20,
                   command=lambda: partner.switch_frame(StartPage)).pack()
-
-        tk.Button(self, text="Pre-Set Players", padx=10, pady=10,
+        tk.Button(self, text="Players Positions", padx=10, pady=10, width=20,
                   command=lambda: partner.switch_frame(PreSetNames)).pack()
 
 
 class PlayerPage(tk.Frame):
     def __init__(self, partner):
-        tk.Frame.__init__(self, partner)
+        background_color = "#00cc00"
+        tk.Frame.__init__(self, partner, bg=background_color)
         tk.Label(self, text="Player Screen", font="arial 20 bold").pack(side="top", fill="x", pady=10)
         tk.Button(self, text="Return to start page", pady=10, padx=10,
                   command=lambda: partner.switch_frame(StartPage)).pack()
@@ -53,16 +98,16 @@ class PlayerPage(tk.Frame):
 
 class PreSetNames(tk.Frame):
     def __init__(self, partner):
+        background_color = "#00cc00"
         tk.Frame.__init__(self, partner)
+        # tk.Button(self, text="Return to Coach page", padx=10, pady=10,
+                 # command=lambda: partner.switch_frame(CoachPage)).pack()
 
         def players():
-            player_names["values"] = ["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"]
+            player_names["values"] = ["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"]
 
-        player_names = ttk.Combobox(values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+        player_names = ttk.Combobox(values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                     postcommand=players)
-
-        # background_color = "#a9ef99"  # pale green
-        background_color = "#00cc00"
 
         # coach page frame
         self.coach_page_frame = tk.Frame(background=background_color, pady=10,
@@ -74,17 +119,20 @@ class PreSetNames(tk.Frame):
                                       font="Arial 20 bold", padx=5, pady=5, bg=background_color)
         self.coach_page_label.grid(row=0)
 
+        self.coach_label = Label(self.coach_page_frame, text="The team list on this page has been pre-set",
+                                 font="Arial 12", padx=5, pady=5, bg=background_color)
+        self.coach_label.grid(row=1)
 
         self.field_frame = tk.Frame(self.coach_page_frame, bg=background_color, highlightbackground="white",
                                     highlightthickness=5, padx=0, pady=0)
-        self.field_frame.grid(row=1)
+        self.field_frame.grid(row=2)
 
         self.draw_field1 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
         self.draw_field1.grid(row=2, column=1)
 
-        self.select_pos2 = tk.StringVar(value='-')
+        self.select_pos2 = tk.StringVar(value="-")
         self.left1_dropdown = ttk.Combobox(self.draw_field1,
-                                          values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                          values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                           postcommand=players, state="readonly", width=10, textvariable=self.select_pos2)
         self.left1_dropdown.grid(row=1, column=1)
 
@@ -93,18 +141,18 @@ class PreSetNames(tk.Frame):
         self.draw_field2.grid(row=2, column=2)
 
         # GOAL BOX
-        self.select_pos1 = tk.StringVar(value='-')
+        self.select_pos1 = tk.StringVar(value="-")
         self.middle1_dropdown = ttk.Combobox(self.draw_field2,
-                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                              postcommand=players, state="readonly", width=10, textvariable=self.select_pos1)
         self.middle1_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color)
         self.draw_field3.grid(row=2, column=3)
 
-        self.select_pos3 = tk.StringVar(value='-')
+        self.select_pos3 = tk.StringVar(value="-")
         self.right1_dropdown = ttk.Combobox(self.draw_field3,
-                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                             postcommand=players, state="readonly", width=10, textvariable=self.select_pos3)
         self.right1_dropdown.grid(row=1, column=1)
 
@@ -113,9 +161,9 @@ class PreSetNames(tk.Frame):
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field1.grid(row=3, column=1)
 
-        self.select_pos4 = tk.StringVar(value='-')
+        self.select_pos4 = tk.StringVar(value="-")
         self.left2_dropdown = ttk.Combobox(self.draw_field1,
-                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos4)
         self.left2_dropdown.grid(row=1, column=1)
 
@@ -123,18 +171,18 @@ class PreSetNames(tk.Frame):
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field2.grid(row=3, column=2)
 
-        self.select_pos5 = tk.StringVar(value='-')
+        self.select_pos5 = tk.StringVar(value="-")
         self.middle2_dropdown = ttk.Combobox(self.draw_field2,
-                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                              postcommand=players, state="readonly", width=10, textvariable=self.select_pos5)
         self.middle2_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field3.grid(row=3, column=3)
 
-        self.select_pos6 = tk.StringVar(value='-')
+        self.select_pos6 = tk.StringVar(value="-")
         self.right2_dropdown = ttk.Combobox(self.draw_field3,
-                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos6)
         self.right2_dropdown.grid(row=1, column=1)
 
@@ -143,9 +191,9 @@ class PreSetNames(tk.Frame):
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field1.grid(row=4, column=1)
 
-        self.select_pos7 = tk.StringVar(value='-')
+        self.select_pos7 = tk.StringVar(value="-")
         self.left3_dropdown = ttk.Combobox(self.draw_field1,
-                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos7)
         self.left3_dropdown.grid(row=1, column=1)
 
@@ -153,18 +201,18 @@ class PreSetNames(tk.Frame):
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field2.grid(row=4, column=2)
 
-        self.select_pos8 = tk.StringVar(value='-')
+        self.select_pos8 = tk.StringVar(value="-")
         self.middle3_dropdown = ttk.Combobox(self.draw_field2,
-                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                              postcommand=players, state="readonly", width=10, textvariable=self.select_pos8)
         self.middle3_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field3.grid(row=4, column=3)
 
-        self.select_pos9 = tk.StringVar(value='-')
+        self.select_pos9 = tk.StringVar(value="-")
         self.right3_dropdown = ttk.Combobox(self.draw_field3,
-                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                             postcommand=players, state="readonly", width=10, textvariable=self.select_pos9)
         self.right3_dropdown.grid(row=1, column=1)
 
@@ -173,9 +221,9 @@ class PreSetNames(tk.Frame):
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field1.grid(row=5, column=1)
 
-        self.select_pos10 = tk.StringVar(value='-')
+        self.select_pos10 = tk.StringVar(value="-")
         self.left4_dropdown = ttk.Combobox(self.draw_field1,
-                                           values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                           values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                            postcommand=players, state="readonly", width=10, textvariable=self.select_pos10)
         self.left4_dropdown.grid(row=1, column=1)
 
@@ -183,41 +231,46 @@ class PreSetNames(tk.Frame):
                                     highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field2.grid(row=5, column=2)
 
-        self.select_pos11 = tk.StringVar(value='-')
+        self.select_pos11 = tk.StringVar(value="-")
         self.middle4_dropdown = ttk.Combobox(self.draw_field2,
-                                             values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                             values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                              postcommand=players, state="readonly", width=10, textvariable=self.select_pos11)
         self.middle4_dropdown.grid(row=1, column=1)
 
         self.draw_field3 = tk.Frame(self.field_frame, padx=10, pady=10, bg=background_color, highlightbackground="#00cc00", highlightthickness=5)
         self.draw_field3.grid(row=5, column=3)
 
-        self.select_pos12 = tk.StringVar(value='-')
+        self.select_pos12 = tk.StringVar(value="-")
         self.right4_dropdown = ttk.Combobox(self.draw_field3,
-                                            values=["Sarah Wade", "Georgie Furnell", "Maire", "Jordan Campbell", "Chloe Mattock", "Ella Johns", "Stevie Bos", "Anisha Bowyer", "Bella Ives", "Penny Lovegrove", "Lucea Bedford", "Anne Moores", "Ruby", "Paige Bootle", "Georgia Tindle", "Natalia", "Brooke"],
+                                            values=["Sarah (1)", "Georgie (2)", "Maire (3)", "Jordan (5)", "Chloe (6)", "Ella (7)", "Stevie (8)", "Anisha (9)", "Bella (11)", "Penny (12)", "Lucea (14)", "Anne (17)", "Ruby (18)", "Paige (19)", "Georgia (21)", "Natalia (22)", "Brooke (23)"],
                                             postcommand=players, state="readonly", width=10, textvariable=self.select_pos12)
         self.right4_dropdown.grid(row=1, column=1)
 
-        teamPosList = ["not used", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"]
-        self.select_team_button = Button(self.coach_page_frame, text="Select", command=lambda: self.export(teamPosList))
+        team_pos_list = ["not used", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"]
+
+        self.select_team_button = Button(self.coach_page_frame, text="UPDATE", command=lambda: self.export(team_pos_list))
         self.select_team_button.grid(row=3)
+
 
         def update_positions(event):
             # could make a list for this or loop to simplify
-            teamPosList[1] = self.select_pos1.get()
-            teamPosList[2] = self.select_pos2.get()
-            teamPosList[3] = self.select_pos3.get()
-            teamPosList[4] = self.select_pos4.get()
-            teamPosList[5] = self.select_pos5.get()
-            teamPosList[6] = self.select_pos6.get()
-            teamPosList[7] = self.select_pos7.get()
-            teamPosList[8] = self.select_pos8.get()
-            teamPosList[9] = self.select_pos9.get()
-            teamPosList[10] = self.select_pos10.get()
-            teamPosList[11] = self.select_pos11.get()
-            teamPosList[12] = self.select_pos12.get()
+            team_pos_list[1] = self.select_pos1.get()
+            team_pos_list[2] = self.select_pos2.get()
+            team_pos_list[3] = self.select_pos3.get()
+            team_pos_list[4] = self.select_pos4.get()
+            team_pos_list[5] = self.select_pos5.get()
+            team_pos_list[6] = self.select_pos6.get()
+            team_pos_list[7] = self.select_pos7.get()
+            team_pos_list[8] = self.select_pos8.get()
+            team_pos_list[9] = self.select_pos9.get()
+            team_pos_list[10] = self.select_pos10.get()
+            team_pos_list[11] = self.select_pos11.get()
+            team_pos_list[12] = self.select_pos12.get()
+            # teamliststring = ""
+            # teamliststring = team_pos_list[1], team_pos_list[2], team_pos_list[3], team_pos_list[4], team_pos_list[5], team_pos_list[6], team_pos_list[7], team_pos_list[8],team_pos_list[1]
+
             # print('Updated')
-            # print(f"list:{teamPosList}")
+            # print(f"list:{team_pos_list}")
 
         self.middle1_dropdown.bind('<<ComboboxSelected>>', update_positions)
         self.left1_dropdown.bind('<<ComboboxSelected>>', update_positions)
@@ -232,23 +285,22 @@ class PreSetNames(tk.Frame):
         self.middle4_dropdown.bind('<<ComboboxSelected>>', update_positions)
         self.right4_dropdown.bind('<<ComboboxSelected>>', update_positions)
 
-# if any = " " then error = team is not completed
-    def export(self, teamPosList):
-        for item in teamPosList:
-            if item == '-':
+    # if any = " " then error = team is not completed
+    def export(self, team_pos_list):
+        contmessage = "The positions are listed below"
+
+        for item in team_pos_list:
+            if item == "-":
                 contmessage = "Your team is not complete!"
-                print(contmessage)
-                # self.select_team_button.config(state=DISABLED)
+                print("NO")
             else:
-                contmessage = "The positions are listed below"
-                # enable select button
-                self.select_team_button.config(state=NORMAL)
-                print(contmessage)
-        Export(self, contmessage, teamPosList)
+                print("YES")
+
+        Export(self, contmessage, team_pos_list)
 
 
 class Export:
-    def __init__(self, partner, contmessage, teamPosList):
+    def __init__(self, partner, contmessage, team_pos_list):
         background = "orange"
         # disable export button
         #partner.select_team_button.config(state=DISABLED)
@@ -266,8 +318,8 @@ class Export:
         self.how_heading.grid(row=0)
 
         n = 0
-        for itemlist in teamPosList:
-            teamtext = f'Position {n}: {teamPosList[n]}'
+        for itemlist in team_pos_list:
+            teamtext = f'Position {n}: {team_pos_list[n]}'
             print(teamtext)
             # names text (label, row 1)
             self.teamplay_text = Label(self.export_frame, text=teamtext,
@@ -289,9 +341,13 @@ class Export:
 
 if __name__ == "__main__":
     gameplay = GamePlay()
+    background_color = "#00cc00"
     gameplay.geometry("500x900")
+    gameplay.config(background="#00cc00")
     gameplay.title("GamePlay")
     gameplay.mainloop()
+
+
 
 
 
